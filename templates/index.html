@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard Interativo de Leads</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<style>
+body { padding: 20px; background: #f5f5f5; }
+.table-container { max-height: 600px; overflow-y: scroll; background: white; padding: 10px; border-radius: 8px; }
+.filter-buttons .btn { margin: 3px; }
+</style>
+</head>
+<body>
+<h1>Dashboard de Leads</h1>
+
+<div class="mb-3 filter-buttons">
+    <strong>Filtrar Leads:</strong><br>
+    <button class="btn btn-primary" onclick="filterLeads('all')">Todos</button>
+    <button class="btn btn-info" onclick="filterLeads('deposit_1x')">Depósito 1x</button>
+    <button class="btn btn-success" onclick="filterLeads('deposit_3x')">Depósito ≥3x</button>
+    <button class="btn btn-warning" onclick="filterLeads('inactive_30d')">30 dias sem depositar</button>
+    <button class="btn btn-danger" onclick="filterLeads('no_deposit')">Sem depósito</button>
+    <button class="btn btn-secondary" onclick="filterLeads('banca_baixa')">Banca < 1 USD</button>
+</div>
+
+<div class="mb-3">
+    <a href="/export-xls" class="btn btn-success">Exportar XLS</a>
+</div>
+
+<div class="table-container">
+<table class="table table-striped table-bordered" id="leadsTable">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Telefone</th>
+            <th>Número Depósitos</th>
+            <th>Último Depósito</th>
+            <th>Saldo REAL</th>
+            <th>Categoria</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for lead in leads %}
+        <tr data-deposit_1x="{{ lead.deposit_1x }}" 
+            data-deposit_3x="{{ lead.deposit_3x }}" 
+            data-inactive_30d="{{ lead.inactive_30d }}" 
+            data-no_deposit="{{ lead.no_deposit }}" 
+            data-banca_baixa="{{ 'true' if lead.saldo_real < 1 else 'false' }}">
+            <td>{{ lead.name }}</td>
+            <td>{{ lead.email }}</td>
+            <td>{{ lead.phone }}</td>
+            <td>{{ lead.deposit_count }}</td>
+            <td>{{ lead.last_deposit }}</td>
+            <td>{{ lead.saldo_real | round(2) }}</td>
+            <td>{{ lead.saldo_category }}</td>
+            <td>{{ "Congelado" if lead.freeze else "Ativo" }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+
+<script>
+function filterLeads(category) {
+    const rows = document.querySelectorAll("#leadsTable tbody tr");
+    rows.forEach(row => {
+        if (category === 'all') {
+            row.style.display = '';
+            return;
+        }
+        const val = row.dataset[category];
+        if (val === 'true' || val === true) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+}
+</script>
+
+</body>
+</html>
