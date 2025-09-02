@@ -10,7 +10,7 @@ API_USERS = "https://broker-api.mybroker.dev/admin/users"
 API_DEPOSITS = "https://broker-api.mybroker.dev/admin/user-transactions?type=DEPOSIT"
 HEADERS = {
     "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiQWNlc3NvIEFkbWluIiwiZ3JvdXBJZCI6IjAxSlowTk5HR0MyNFZQQzdHR1ZXRU1DUVRZIiwiZW1haWwiOiJnYWJyaWVsaGVybmFuZGVzODIxQGdtYWlsLmNvbSIsInRlbmFudElkIjoiMDFKWjBLWk1KS0VESEE4NVBRSlc1MEZDTVEiLCJpZCI6IjAxSlowUDZLTURXV1lIQk1WNlQ3QlJNNkZWIiwibG9naW5JZCI6IjAxSzQzSjNXTVE0S0NSMEJZQ0NQTloxNTZTIiwiaWF0IjoxNzU2NzYxMjg5LCJleHAiOjE3NTY3ODI4ODksImlzcyI6IkFVVEgtVFJBREUtT1BUSU9OLUFETUlOIn0.OJpzZhOZmjVmVvVsn31RFh4K_aTQFhjyMaNXawFMSWI",
-    "x-timestamp": str(int(datetime.now().timestamp() * 1000))
+    "x-timestamp": "1756761303266"
 }
 
 # Funções para buscar dados da API com paginação
